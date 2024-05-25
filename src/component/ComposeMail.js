@@ -26,12 +26,14 @@ const ComposeMail = () => {
   const handleSend = () => {
     const editorContent = editorState.getCurrentContent().getPlainText();
     const firebaseemail = from.replace(/[.]/g, "");
+    const timestamp = new Date().toLocaleString();
 
     const emailData = {
       from,
       to,
       subject,
       editorContent,
+      timestamp,
     };
 
     fetch(

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import MailBox from "./MailBox";
 
 const SentMails = () => {
   const [sentMails, setSentMails] = useState([]);
-  const [selectedMail, setSelectedMail] = useState(null); // State to store the selected mail details
+  const [selectedMail, setSelectedMail] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const SentMails = () => {
 
       setSentMails(sentMails.filter((mail) => mail.id !== id));
       if (selectedMail && selectedMail.id === id) {
-        setSelectedMail(null); 
+        setSelectedMail(null);
       }
     } catch (error) {
       console.error("Error deleting mail:", error);
@@ -74,14 +74,29 @@ const SentMails = () => {
       {selectedMail ? (
         <Card className="mt-3">
           <Card.Body>
-            <Card.Title>From: {selectedMail.from}</Card.Title>
-            <Card.Subtitle className="mb-2">To: {selectedMail.to}</Card.Subtitle>
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <Card.Title>From: {selectedMail.from}</Card.Title>
+                <Card.Subtitle className="mb-2">
+                  To: {selectedMail.to}
+                </Card.Subtitle>
+              </div>
+              <div className="text-muted">{selectedMail.timestamp}</div>
+            </div>
             <Card.Text>Subject: {selectedMail.subject}</Card.Text>
             <Card.Text>{selectedMail.editorContent}</Card.Text>
-            <Button variant="link" className="text-danger" onClick={(event) => handleDelete(selectedMail.id, event)}>
-              <FontAwesomeIcon icon={faTrash} />
-            </Button>
-            <Button variant="secondary" onClick={() => setSelectedMail(null)}>Back</Button>
+            <div>
+              <Button variant="primary" onClick={() => setSelectedMail(null)}>
+                Back
+              </Button>
+              <Button
+                variant="link"
+                className="text-danger"
+                onClick={(event) => handleDelete(selectedMail.id, event)}
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </Button>
+            </div>
           </Card.Body>
         </Card>
       ) : (
@@ -95,10 +110,12 @@ const SentMails = () => {
               <div className="d-flex align-items-center">
                 <Card.Title className="mb-0 mr-3">{mail.to}</Card.Title>
               </div>
-              <Card.Subtitle className="mb-0 text-center">{mail.subject}</Card.Subtitle>
-              <Button 
-                variant="link" 
-                className="text-danger" 
+              <Card.Subtitle className="mb-0 text-center">
+                {mail.subject}
+              </Card.Subtitle>
+              <Button
+                variant="link"
+                className="text-danger"
                 onClick={(event) => handleDelete(mail.id, event)}
               >
                 <FontAwesomeIcon icon={faTrash} />
