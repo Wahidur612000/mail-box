@@ -27,7 +27,8 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         localStorage.setItem("token", data.idToken);
-        navigate('/welcome');
+        localStorage.setItem('email',email)
+        navigate('/mailbox');
       })
       .catch((error) => {
         console.error("Error:", error);

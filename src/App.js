@@ -3,6 +3,8 @@ import SignUp from './component/SignUp';
 import { Route, Routes } from 'react-router-dom';
 import Login from './component/Login';
 import Welcome from './component/Welcome';
+import MailBox from './component/MailBox';
+import ComposeMail from './component/ComposeMail';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route path="/" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/welcome" element={<Welcome />} />
+        <Route path="/mailbox" element={<MailBox />} />
+        <Route path="/composemail" element={<ComposeMail />} />
       </Routes>
   );
 }
