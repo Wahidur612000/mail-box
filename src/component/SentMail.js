@@ -7,6 +7,7 @@ import MailBox from "./MailBox";
 
 const SentMails = () => {
   const [sentMails, setSentMails] = useState([]);
+  const [selectedMail, setSelectedMail] = useState(null); // State to store the selected mail details
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +43,9 @@ const SentMails = () => {
     fetchSentMails();
   }, []);
 
-  
+  const handleItemClick = (mail) => {
+    setSelectedMail(mail);
+  };
 
   const handleDelete = async (id, event) => {
     event.stopPropagation();
@@ -68,11 +71,25 @@ const SentMails = () => {
 
   return (
     <MailBox>
-      {
+      {selectedMail ? (
+        <Card className="mt-3">
+          <Card.Body>
+            <Card.Title>From: {selectedMail.from}</Card.Title>
+            <Card.Subtitle className="mb-2">To: {selectedMail.to}</Card.Subtitle>
+            <Card.Text>Subject: {selectedMail.subject}</Card.Text>
+            <Card.Text>{selectedMail.editorContent}</Card.Text>
+            <Button variant="link" className="text-danger" onClick={(event) => handleDelete(selectedMail.id, event)}>
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+            <Button variant="secondary" onClick={() => setSelectedMail(null)}>Back</Button>
+          </Card.Body>
+        </Card>
+      ) : (
         sentMails.map((mail) => (
           <Card
             key={mail.id}
             className="mt-3"
+            onClick={() => handleItemClick(mail)}
           >
             <Card.Body className="d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center">
@@ -89,7 +106,7 @@ const SentMails = () => {
             </Card.Body>
           </Card>
         ))
-      }
+      )}
     </MailBox>
   );
 };
