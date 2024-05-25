@@ -42,21 +42,37 @@ const SentMails = () => {
     fetchSentMails();
   }, []);
 
-  const handleItemClick = (mail) => {
-    
-  };
+  
 
   const handleDelete = async (id, event) => {
-    
+    event.stopPropagation();
+    try {
+      const emailId = localStorage.getItem("email");
+      const firebaseemail = emailId.replace(/[.]/g, "");
+
+      await fetch(
+        `https://mailbox-50f1d-default-rtdb.asia-southeast1.firebasedatabase.app/emails/${firebaseemail}/${id}.json`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      setSentMails(sentMails.filter((mail) => mail.id !== id));
+      if (selectedMail && selectedMail.id === id) {
+        setSelectedMail(null); 
+      }
+    } catch (error) {
+      console.error("Error deleting mail:", error);
+    }
   };
 
   return (
     <MailBox>
-       { sentMails.map((mail) => (
+      {
+        sentMails.map((mail) => (
           <Card
             key={mail.id}
             className="mt-3"
-            onClick={() => handleItemClick(mail)}
           >
             <Card.Body className="d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center">
@@ -72,7 +88,8 @@ const SentMails = () => {
               </Button>
             </Card.Body>
           </Card>
-        ))}
+        ))
+      }
     </MailBox>
   );
 };
