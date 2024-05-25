@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import MailBox from "./MailBox";
 import { useNavigate } from "react-router-dom";
@@ -7,24 +7,28 @@ import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const ComposeMail = () => {
+  const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
+  useEffect(() => {
+    const emailId = localStorage.getItem("email");
+    setFrom(emailId || "");
+  }, []);
+
   const handleEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
   };
 
   const handleSend = () => {
-
     const editorContent = editorState.getCurrentContent().getPlainText();
-    const emailId = localStorage.getItem("email");
-    const firebaseemail = emailId.replace(/[.]/g, "");
+    const firebaseemail = from.replace(/[.]/g, "");
 
     const emailData = {
-      from:emailId,
+      from,
       to,
       subject,
       editorContent,
@@ -46,7 +50,7 @@ const ComposeMail = () => {
         setTo("");
         setSubject("");
         setBody("");
-        navigate("/mailbox");
+        navigate("/sentmail");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -60,6 +64,15 @@ const ComposeMail = () => {
           <Row className="justify-content-center">
             <Col md={12}>
               <Form>
+                <Form.Group controlId="formFrom">
+                  <Form.Label>From</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Your email"
+                    value={from}
+                    readOnly
+                  />
+                </Form.Group>
                 <Form.Group controlId="formTo">
                   <Form.Label>To</Form.Label>
                   <Form.Control
@@ -81,7 +94,7 @@ const ComposeMail = () => {
                 <Editor
                   toolbarClassName="py-3 border-bottom bg-light"
                   wrapperClassName="card mt-3"
-                  editorClassName="card-body pt-0 "
+                  editorClassName="card-body pt-0"
                   editorStyle={{ minHeight: "20rem" }}
                   editorState={editorState}
                   onEditorStateChange={handleEditorStateChange}
