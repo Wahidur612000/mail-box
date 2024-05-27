@@ -1,6 +1,6 @@
 import './App.css';
 import SignUp from './component/SignUp';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Login from './component/Login';
 import Welcome from './component/Welcome';
 import MailBox from './component/MailBox';
@@ -18,6 +18,7 @@ function App() {
         <Route path="/mailbox" element={<MailBox />} />
         <Route path="/composemail" element={<ComposeMail />} />
         <Route path="/sentmail" element={<SentMail />} />
+        <Route path="*" element={<Navigate replace to="/mailbox" />}></Route>
       </Routes>
   );
 }

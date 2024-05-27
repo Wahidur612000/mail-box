@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import MailBox from "./MailBox";
@@ -8,7 +7,6 @@ import MailBox from "./MailBox";
 const SentMails = () => {
   const [sentMails, setSentMails] = useState([]);
   const [selectedMail, setSelectedMail] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSentMails = async () => {
@@ -81,7 +79,7 @@ const SentMails = () => {
                   To: {selectedMail.to}
                 </Card.Subtitle>
               </div>
-              <div className="text-muted">{selectedMail.timestamp}</div>
+              <div>{selectedMail.timestamp}</div>
             </div>
             <Card.Text>Subject: {selectedMail.subject}</Card.Text>
             <Card.Text>{selectedMail.editorContent}</Card.Text>

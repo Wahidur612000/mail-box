@@ -1,6 +1,6 @@
 import React from "react";
 import MailHeader from "./MailHeader";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import MailSidebar from "./MailSidebar";
 import { useLocation } from "react-router-dom";
 

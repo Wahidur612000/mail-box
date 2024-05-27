@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Button from "react-bootstrap/Button";
+import Button from "react-bootstrap/Button"; 
+import { useDispatch } from 'react-redux';
+import { login } from "./Store/AuthSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -28,6 +32,8 @@ const Login = () => {
       .then((data) => {
         localStorage.setItem("token", data.idToken);
         localStorage.setItem('email',email)
+        localStorage.setItem('login',"true")
+        dispatch(login());
         navigate('/mailbox');
       })
       .catch((error) => {

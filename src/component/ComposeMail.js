@@ -10,7 +10,6 @@ const ComposeMail = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");
-  const [body, setBody] = useState("");
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -51,7 +50,6 @@ const ComposeMail = () => {
         console.log("Success:", data);
         setTo("");
         setSubject("");
-        setBody("");
         navigate("/sentmail");
       })
       .catch((error) => {

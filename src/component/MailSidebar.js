@@ -36,7 +36,7 @@ function MailSidebar() {
             </a>
           </ListGroup.Item>
           <ListGroup.Item className="bg-primary border-0">
-            <a className="text-light">
+            <a href="/mailbox" className="text-light">
               <FontAwesomeIcon icon={faTrash} /> Delete
             </a>
           </ListGroup.Item>
