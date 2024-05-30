@@ -36,6 +36,9 @@ const Inbox = () => {
     };
 
     fetchInbox();
+    const intervalId = setInterval(fetchInbox, 2000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleItemClick = async (mail) => {
