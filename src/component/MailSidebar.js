@@ -21,7 +21,7 @@ function MailSidebar() {
       <div className="sidebar bg-primary text-dark p-3">
         <ListGroup variant="flush">
           <ListGroup.Item className="bg-primary border-0">
-            <a href="/mailbox" className="text-light">
+            <a href="/inbox" className="text-light">
               <FontAwesomeIcon icon={faEnvelope} /> Inbox
             </a>
           </ListGroup.Item>

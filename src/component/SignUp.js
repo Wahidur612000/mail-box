@@ -37,10 +37,16 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div style={{
+      backgroundImage: "url('https://t4.ftcdn.net/jpg/05/71/83/47/360_F_571834789_ujYbUnH190iUokdDhZq7GXeTBRgqYVwa.jpg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      height: '100vh',
+    }}>
+    <div >
       <div className="row justify-content-center">
         <div className="col-md-4">
-          <div className="card">
+          <div className="card" style={{marginTop:"100px",width:"80%"}}>
             <div className="card-body">
               <h1 className="card-title text-center">Sign Up</h1>
               <form onSubmit={handleSubmit}>
@@ -86,6 +92,7 @@ const SignUp = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

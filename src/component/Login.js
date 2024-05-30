@@ -34,7 +34,7 @@ const Login = () => {
         localStorage.setItem('email',email)
         localStorage.setItem('login',"true")
         dispatch(login());
-        navigate('/mailbox');
+        navigate('/inbox');
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -42,12 +42,17 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div style={{
+      backgroundImage: "url('https://t4.ftcdn.net/jpg/05/71/83/47/360_F_571834789_ujYbUnH190iUokdDhZq7GXeTBRgqYVwa.jpg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      height: '100vh',
+    }}>
       <div
         className="row justify-content-center"
       >
         <div className="col-md-4">
-          <div className="card">
+          <div className="card" style={{marginTop:"100px",width:"80%"}}>
             <div className="card-body">
               <h1 className="card-title text-center">Login</h1>
               <form onSubmit={handleSubmit}>
