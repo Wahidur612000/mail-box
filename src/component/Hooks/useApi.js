@@ -25,6 +25,7 @@ const useApi = (url) => {
     };
 
     fetchData();
+    const intervalId = setInterval(fetchData, 2000);
 
     return () => {
       
