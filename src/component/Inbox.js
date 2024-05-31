@@ -3,43 +3,50 @@ import { Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import MailBox from "./MailBox";
+import useApi from "./Hooks/useApi";
 
 const Inbox = () => {
   const [inbox, setInbox] = useState([]);
   const [selectedMail, setSelectedMail] = useState(null);
 
+  // useEffect(() => {
+  //   const fetchInbox = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `https://mailbox-50f1d-default-rtdb.asia-southeast1.firebasedatabase.app/inbox.json`
+  //       );
+
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch inbox.");
+  //       }
+
+  //       const data = await response.json();
+
+  //       if (data) {
+  //         const inboxArray = Object.keys(data).map((key) => ({
+  //           id: key,
+  //           ...data[key],
+  //         }));
+  //         setInbox(inboxArray);
+  //         console.log('inbox',inboxArray)
+  //       } else {
+  //         setInbox([]);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching inbox:", error);
+  //     }
+  //   };
+
+  //   fetchInbox();
+  //   const intervalId = setInterval(fetchInbox, 2000);
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
+  const [inboxmails] = useApi(`https://mailbox-50f1d-default-rtdb.asia-southeast1.firebasedatabase.app/inbox.json`);
+
   useEffect(() => {
-    const fetchInbox = async () => {
-      try {
-        const response = await fetch(
-          `https://mailbox-50f1d-default-rtdb.asia-southeast1.firebasedatabase.app/inbox.json`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch inbox.");
-        }
-
-        const data = await response.json();
-
-        if (data) {
-          const inboxArray = Object.keys(data).map((key) => ({
-            id: key,
-            ...data[key],
-          }));
-          setInbox(inboxArray);
-        } else {
-          setInbox([]);
-        }
-      } catch (error) {
-        console.error("Error fetching inbox:", error);
-      }
-    };
-
-    fetchInbox();
-    const intervalId = setInterval(fetchInbox, 2000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+    setInbox(inboxmails);
+  }, [inboxmails]);
 
   const handleItemClick = async (mail) => {
     if (!mail.hasRead) {
@@ -116,6 +123,7 @@ const Inbox = () => {
           </Card.Body>
         </Card>
       ) : (
+        Array.isArray(inbox)&&
         inbox.map((mail) => (
           <Card
             key={mail.id}
