@@ -6,6 +6,7 @@ import MailBox from './component/MailBox';
 import ComposeMail from './component/ComposeMail';
 import SentMail from './component/SentMail';
 import Inbox from './component/Inbox';
+import UnreadMails from './component/UnreadMails';
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
         <Route path="/mailbox" element={<MailBox />} />
         <Route path="/inbox" element={<Inbox />} />
         <Route path="/composemail" element={<ComposeMail />} />
-        <Route path="/sentmail" element={<SentMail />} />
-        <Route path="*" element={<Navigate replace to="/mailbox" />}></Route>
+        <Route path="/sentmails" element={<SentMail />} />
+        <Route path="/unreadmails" element={<UnreadMails />} />
+        <Route path="*" element={<Navigate replace to="/inbox" />}></Route>
       </Routes>
   );
 }

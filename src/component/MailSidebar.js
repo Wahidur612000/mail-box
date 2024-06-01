@@ -5,21 +5,30 @@ import {
   faEnvelope,
   faPaperPlane,
   faEyeSlash,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from 'react-redux';
+import { logout } from "./Store/AuthSlice";
+import { useNavigate } from "react-router-dom";
 
 const MailSidebar = () => {
   const [inboxCount, setInboxCount] = useState(0);
   const [unreadCount, setUnreadCount] = useState(0);
   const [sentCount, setSentCount] = useState(0);
+  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMailCounts = async () => {
       try {
+        const emailId = localStorage.getItem("email");
+        setEmail(emailId);
+
+        const firebaseemail = emailId.replace(/[.]/g, "");
         const inboxResponse = await fetch(
           `https://mailbox-50f1d-default-rtdb.asia-southeast1.firebasedatabase.app/inbox.json`
         );
-        const emailId = localStorage.getItem("email");
-        const firebaseemail = emailId.replace(/[.]/g, "");
         const sentResponse = await fetch(
           `https://mailbox-50f1d-default-rtdb.asia-southeast1.firebasedatabase.app/emails/${firebaseemail}.json`
         );
@@ -58,8 +67,13 @@ const MailSidebar = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
+
   return (
-    <div  >
+    <div style={{ display: 'flex', flexDirection: 'column', height: '80vh' }}>
       <Button
         variant="success"
         style={{ width: "130px", marginTop: "20px" }}
@@ -67,24 +81,33 @@ const MailSidebar = () => {
       >
         Compose
       </Button>
-      <div className="sidebar bg-primary text-dark p-3" >
-        <ListGroup variant="flush" >
+      <div className="sidebar bg-primary text-dark p-3" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <ListGroup variant="flush" style={{ flex: 1 }}>
           <ListGroup.Item className="bg-primary border-0">
-            <a href="/inbox" className="text-light" style={{textDecoration:"none"}}>
-              <FontAwesomeIcon icon={faEnvelope} /> Inbox ({inboxCount})
+            <a href="/inbox" className="text-light" style={{ textDecoration: "none" }}>
+              <FontAwesomeIcon icon={faEnvelope} />&nbsp; Inbox ({inboxCount})
             </a>
           </ListGroup.Item>
           <ListGroup.Item className="bg-primary border-0">
-            <a href="/inbox" className="text-light" style={{textDecoration:"none"}}>
-              <FontAwesomeIcon icon={faEyeSlash} /> Unread ({unreadCount})
+            <a href="/unreadmails" className="text-light" style={{ textDecoration: "none" }}>
+              <FontAwesomeIcon icon={faEyeSlash} />&nbsp; Unread ({unreadCount})
             </a>
           </ListGroup.Item>
           <ListGroup.Item className="bg-primary border-0">
-            <a href="/sentmail" className="text-light" style={{textDecoration:"none"}}>
-              <FontAwesomeIcon icon={faPaperPlane} /> Sent ({sentCount})
+            <a href="/sentmail" className="text-light" style={{ textDecoration: "none" }}>
+              <FontAwesomeIcon icon={faPaperPlane} />&nbsp; Sent ({sentCount})
             </a>
           </ListGroup.Item>
         </ListGroup>
+        <div style={{ marginTop: 'auto'}}>
+          <div className="d-flex align-items-center text-light mb-2">
+            <FontAwesomeIcon icon={faUser} style={{ marginRight: '10px' }} />
+            <span>{email}</span>
+          </div>
+          <Button variant="outline-light"  onClick={handleLogout} style={{ textDecoration: "none" }}>
+            Logout
+          </Button>
+        </div>
       </div>
     </div>
   );

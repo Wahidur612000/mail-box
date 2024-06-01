@@ -28,7 +28,7 @@ const useApi = (url) => {
     const intervalId = setInterval(fetchData, 2000);
 
     return () => {
-      
+        clearInterval(intervalId);
     };
   }, [url]);
  
