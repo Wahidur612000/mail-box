@@ -8,7 +8,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from 'react-redux';
-import { logout } from "./Store/AuthSlice";
+import { logout } from "../store/AuthSlice";
 import { useNavigate } from "react-router-dom";
 
 const MailSidebar = () => {
@@ -94,7 +94,7 @@ const MailSidebar = () => {
             </a>
           </ListGroup.Item>
           <ListGroup.Item className="bg-primary border-0">
-            <a href="/sentmail" className="text-light" style={{ textDecoration: "none" }}>
+            <a href="/sentmails" className="text-light" style={{ textDecoration: "none" }}>
               <FontAwesomeIcon icon={faPaperPlane} />&nbsp; Sent ({sentCount})
             </a>
           </ListGroup.Item>

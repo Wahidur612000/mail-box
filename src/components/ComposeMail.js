@@ -50,7 +50,7 @@ const ComposeMail = () => {
         console.log("Success:", data);
         setTo("");
         setSubject("");
-        navigate("/sentmail");
+        navigate("/sentmails");
       })
       .catch((error) => {
         console.error("Error:", error);

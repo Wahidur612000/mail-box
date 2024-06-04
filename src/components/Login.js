@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button"; 
 import { useDispatch } from 'react-redux';
-import { login } from "./Store/AuthSlice";
+import { login } from "../store/AuthSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");

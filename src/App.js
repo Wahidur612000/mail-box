@@ -1,27 +1,27 @@
-import './App.css';
-import SignUp from './component/SignUp';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import Login from './component/Login';
-import MailBox from './component/MailBox';
-import ComposeMail from './component/ComposeMail';
-import SentMail from './component/SentMail';
-import Inbox from './component/Inbox';
-import UnreadMails from './component/UnreadMails';
+import "./App.css";
+import SignUp from "./components/SignUp";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import MailBox from "./components/MailBox";
+import ComposeMail from "./components/ComposeMail";
+import SentMail from "./components/SentMail";
+import Inbox from "./components/Inbox";
+import UnreadMails from "./components/UnreadMails";
 
 function App() {
+  const isLoggedIn = localStorage.getItem("login");
   return (
-    
-      <Routes>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mailbox" element={<MailBox />} />
-        <Route path="/inbox" element={<Inbox />} />
-        <Route path="/composemail" element={<ComposeMail />} />
-        <Route path="/sentmails" element={<SentMail />} />
-        <Route path="/unreadmails" element={<UnreadMails />} />
-        <Route path="*" element={<Navigate replace to="/inbox" />}></Route>
-      </Routes>
+    <Routes>
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/" element={<SignUp />} />
+      <Route path="/login" element={<Login />} />
+      {isLoggedIn && <Route path="/mailbox" element={<MailBox />} />}
+      {isLoggedIn && <Route path="/inbox" element={<Inbox />} />}
+      {isLoggedIn && <Route path="/composemail" element={<ComposeMail />} />}
+      {isLoggedIn && <Route path="/sentmails" element={<SentMail />} />}
+      {isLoggedIn && <Route path="/unreadmails" element={<UnreadMails />} />}
+      <Route path="*" element={<Navigate replace to="/inbox" />}></Route>
+    </Routes>
   );
 }
 

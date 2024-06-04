@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import MailBox from "./MailBox";
-import useApi from "./Hooks/useApi";
+import useApi from "../hooks/useApi";
 
 const UnreadMails = () => {
   const [unreadMails, setUnreadMails] = useState([]);
